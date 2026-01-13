@@ -84,3 +84,68 @@ def get_attendance_by_date(attendance_date):
             cursor.close()
         if conn:
             conn.close()
+
+def get_attendance_percentage_overall(student_id):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        query = """
+            SELECT
+                COUNT(*) AS total,
+                SUM(CASE WHEN status = 'present' THEN 1 ELSE 0 END) AS present_count
+            FROM attendance
+            WHERE student_id = %s
+        """
+
+        cursor.execute(query, (student_id,))
+        result = cursor.fetchone()
+
+        if result["total"] == 0:
+            return None
+
+        percentage = (result["present_count"] / result["total"]) * 100
+        return round(percentage, 2)
+
+    except Exception as e:
+        print(e)
+        return None
+
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+
+def get_attendance_percentage_subject(student_id, subject_id):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        query = """
+            SELECT
+                COUNT(*) AS total,
+                SUM(CASE WHEN status = 'present' THEN 1 ELSE 0 END) AS present_count
+            FROM attendance
+            WHERE student_id = %s AND subject_id = %s
+        """
+
+        cursor.execute(query, (student_id, subject_id))
+        result = cursor.fetchone()
+
+        if result["total"] == 0:
+            return None
+
+        percentage = (result["present_count"] / result["total"]) * 100
+        return round(percentage, 2)
+
+    except Exception as e:
+        print(e)
+        return None
+
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+
