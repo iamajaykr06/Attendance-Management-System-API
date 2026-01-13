@@ -21,32 +21,35 @@ This project focuses on backend fundamentals, clean API design, validation, and 
 ```
 Attendance-Management-System-API/
 │
-├── app.py                  # Application entry point
-├── db.py                   # MySQL database connection
+├── app.py                    # Application entry point
+├── db.py                     # MySQL database connection
 ├── models/
-│   ├── subject.py          # Subject DB operations
-│   └── attendance.py       # Attendance DB operations
+│   ├── __init__.py
+│   ├── subject.py            # Subject database operations
+│   └── attendance.py         # Attendance database operations
 ├── routes/
-│   └── subject_routes.py   # Subject & attendance routes
+│   ├── __init__.py
+│   ├── subject_routes.py     # Subject-related routes
+│   └── attendance_routes.py  # Attendance-related routes
 ├── requirements.txt
 ├── README.md
-└── screenshots/            # Postman API testing screenshots
-```
+└── screenshots/              # Postman API testing screenshots
+ ```
 
 ## Setup Instructions
-### 1️ Clone the repository**
+### 1️ Clone the repository
 ```
 git clone https://github.com/iamajaykr06/Attendance-Management-System-API.git
 cd Attendance-Management-System-API
 ```
 
-### 2️ Create virtual environment (recommended)**
+### 2️ Create virtual environment (recommended)
 ```
 python -m venv venv
 source venv/bin/activate   # Windows: venv\Scripts\activate
 ```
 
-### 3 Install dependencies**
+### 3 Install dependencies
 ```
 pip install -r requirements.txt
 ```
@@ -111,11 +114,16 @@ Responses
 - `201 Created`
 - `400 Bad Request`
 
+Example error response:
+```
+{
+  "message": "Attendance already marked or invalid data"
+}
+```
 ## Get All Subjects
 **GET** `/subjects`
 
 ## Mark Attendance
-
 **POST** `/attendance`
 ```
 {
